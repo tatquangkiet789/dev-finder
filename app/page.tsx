@@ -1,6 +1,6 @@
 export default function Home() {
     return (
-        <main className='flex flex-col items-center justify-between p-24'>
+        <main className='flex items-center justify-between'>
             <h1>Hello World</h1>
         </main>
     );
