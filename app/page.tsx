@@ -1,7 +1,13 @@
-export default function Home() {
+import db from '@/lib/db';
+
+export default async function Home() {
+    const rooms = await db.room.findMany();
+
     return (
         <main className='flex items-center justify-between'>
-            <h1>Hello World</h1>
+            {rooms.map((room) => (
+                <div key={room.id}>{room.name}</div>
+            ))}
         </main>
     );
 }

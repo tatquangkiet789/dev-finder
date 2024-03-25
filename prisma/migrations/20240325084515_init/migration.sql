@@ -55,6 +55,18 @@ CREATE TABLE "VerificationRequest" (
     CONSTRAINT "VerificationRequest_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "rooms" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "language" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "github_repo" TEXT NOT NULL,
+
+    CONSTRAINT "rooms_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -75,3 +87,6 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_fkey" FOREIGN KEY ("user
 
 -- AddForeignKey
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "rooms" ADD CONSTRAINT "rooms_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
