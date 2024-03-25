@@ -18,17 +18,10 @@ import { createRoomAction } from './actions';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
-    name: z
-        .string()
-        .min(1, {
-            message: 'Name must be at least 1 characters.',
-        })
-        .max(50, {
-            message: 'Name cannot has more than 50 characters.',
-        }),
-    description: z.string().min(1).max(50),
+    name: z.string().min(1).max(50),
+    description: z.string().min(1).max(250),
     language: z.string().min(1).max(50),
-    githubRepo: z.string().min(1).max(50),
+    githubRepo: z.string().min(1).max(250),
 });
 
 export type CreateRoom = z.infer<typeof formSchema>;

@@ -3,6 +3,7 @@
 import db from '@/lib/db';
 import { CreateRoom } from './create-room-form';
 import { getSession } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 
 export async function createRoomAction(roomData: CreateRoom) {
     const { name, language, description, githubRepo } = roomData;
@@ -20,4 +21,5 @@ export async function createRoomAction(roomData: CreateRoom) {
             userId: session.user.id,
         },
     });
+    revalidatePath('/');
 }
