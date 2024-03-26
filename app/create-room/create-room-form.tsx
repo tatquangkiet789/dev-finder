@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const formSchema = z.object({
     name: z.string().min(1).max(50),
     description: z.string().min(1).max(250),
-    language: z.string().min(1).max(50),
+    language: z.string().min(1).max(250),
     githubRepo: z.string().min(1).max(250),
 });
 
@@ -53,7 +53,7 @@ export function CreateRoomForm() {
                         <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} placeholder='Dev Finder' />
                             </FormControl>
                             <FormDescription>This is your public room name.</FormDescription>
                             <FormMessage />
@@ -67,7 +67,10 @@ export function CreateRoomForm() {
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input
+                                    {...field}
+                                    placeholder={`I'm working on a side project, come and join me.`}
+                                />
                             </FormControl>
                             <FormDescription>
                                 Please describe what you are be coding on.
@@ -83,7 +86,10 @@ export function CreateRoomForm() {
                         <FormItem>
                             <FormLabel>Github Repo</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input
+                                    {...field}
+                                    placeholder='"https://github.com/tatquangkiet789/tego-home-assignment"'
+                                />
                             </FormControl>
                             <FormDescription>
                                 Please put a link to the project you are working on.
@@ -97,12 +103,13 @@ export function CreateRoomForm() {
                     name='language'
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Primary Programming Language</FormLabel>
+                            <FormLabel>Tags</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} placeholder='Typescript, NextJS,...' />
                             </FormControl>
                             <FormDescription>
-                                List the primary programming language that you are working with.
+                                List your programming languages, frameworks, libraries so people can
+                                find your content
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

@@ -1,3 +1,4 @@
+import { TagsList } from '@/components/tags-list';
 import { buttonVariants } from '@/components/ui/button';
 import {
     Card,
@@ -29,6 +30,9 @@ function RoomCard({ room }: { room: Room }) {
                     <GithubIcon /> Github Project
                 </Link>
             </CardContent>
+            <CardContent>
+                <TagsList tags={room.language} />
+            </CardContent>
             <CardFooter>
                 <Link href={`/rooms/${room.id}`} className={buttonVariants({ variant: 'default' })}>
                     Join Room
@@ -42,7 +46,7 @@ export default async function Home() {
     const rooms = await fetchAllRomms();
 
     return (
-        <main className='min-h-screen p-16'>
+        <main className='min-h-screen p-8'>
             <div className='flex items-center justify-between mb-8'>
                 <h1 className='text-4xl'>Find Dev Rooms</h1>
                 <Link href={'/create-room'} className={buttonVariants({ variant: 'default' })}>

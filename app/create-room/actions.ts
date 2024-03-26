@@ -11,7 +11,6 @@ export async function createRoomAction(roomData: CreateRoom) {
     if (!session) {
         throw new Error('You must be logged in to create new room');
     }
-    console.log(session);
     await db.room.create({
         data: {
             githubRepo,
