@@ -15,6 +15,7 @@ import { Search } from '@/components/ui/search';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Circle, CircleX, SearchIcon } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,10 +28,11 @@ export type Search = z.infer<typeof formSchema>;
 export function SearchBar() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const searchKeyword = searchParams.get('search');
     const form = useForm<Search>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            search: searchParams.get('search') ?? '',
+            search: searchKeyword ?? '',
         },
     });
 
@@ -41,6 +43,10 @@ export function SearchBar() {
             router.push('/');
         }
     }
+
+    useEffect(() => {
+        form.setValue('search', searchKeyword ?? '');
+    }, [form, searchKeyword]);
 
     return (
         <Form {...form}>

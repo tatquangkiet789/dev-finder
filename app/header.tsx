@@ -2,7 +2,7 @@
 
 import { ModeToggle } from '@/components/mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -59,6 +59,9 @@ export function Header() {
                         className='rounded-lg'
                     />
                     DevFinder
+                </Link>
+                <Link href={'/your-rooms'} className={buttonVariants({ variant: 'link' })}>
+                    Your Rooms
                 </Link>
                 <div className='flex items-center gap-4'>
                     {session.data ? (

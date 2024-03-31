@@ -48,7 +48,7 @@ export const authConfig = {
                     id: token.id as string,
                     name: token.name,
                     email: token.email,
-                    image: token.picture,
+                    image: token.image as string,
                 };
             }
 
