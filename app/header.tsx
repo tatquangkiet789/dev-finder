@@ -17,7 +17,6 @@ import Link from 'next/link';
 
 function AccountDropdown() {
     const session = useSession();
-    const isLoggedIn = Boolean(session.data);
 
     return (
         <DropdownMenu>
@@ -37,22 +36,17 @@ function AccountDropdown() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuSeparator />
-                {isLoggedIn ? (
-                    <DropdownMenuItem onClick={() => signOut()}>
-                        <LogOut className='mr-2' /> Sign Out
-                    </DropdownMenuItem>
-                ) : (
-                    <DropdownMenuItem onClick={() => signIn('google')}>
-                        <LogIn className='mr-2' />
-                        Sign In
-                    </DropdownMenuItem>
-                )}
+                <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
+                    <LogOut className='mr-2' /> Sign Out
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     );
 }
 
 export function Header() {
+    const session = useSession();
+
     return (
         <header className='container mx-auto dark:bg-gray-900 bg-gray-100 py-2'>
             <div className='flex justify-between items-center'>
@@ -66,8 +60,14 @@ export function Header() {
                     />
                     DevFinder
                 </Link>
-                <div className='flex items-center'>
-                    <AccountDropdown />
+                <div className='flex items-center gap-4'>
+                    {session.data ? (
+                        <AccountDropdown />
+                    ) : (
+                        <Button variant={'default'} onClick={() => signIn('google')}>
+                            Sign In
+                        </Button>
+                    )}
                     <ModeToggle />
                 </div>
             </div>

@@ -5,6 +5,7 @@ import { Room } from '@prisma/client';
 import {
     Call,
     CallControls,
+    CallParticipantsList,
     SpeakerLayout,
     StreamCall,
     StreamTheme,
@@ -15,6 +16,7 @@ import {
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { generateTokenAction } from './actions';
+import { useRouter } from 'next/navigation';
 
 const apiKey = process.env.NEXT_PUBLIC_GET_STREAM_API_KEY!;
 // const token =
@@ -24,6 +26,7 @@ export function VideoPlayer({ room }: { room: Room }) {
     const [client, setClient] = useState<StreamVideoClient | null>(null);
     const [call, setCall] = useState<Call | null>(null);
     const session = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         if (!session.data) return;
@@ -48,8 +51,9 @@ export function VideoPlayer({ room }: { room: Room }) {
         setCall(call);
 
         return () => {
-            client.disconnectUser();
-            call.leave();
+            call.leave()
+                .then(() => client.disconnectUser())
+                .catch((error) => console.error(error));
         };
     }, [room, session.data]);
 
@@ -59,8 +63,9 @@ export function VideoPlayer({ room }: { room: Room }) {
             <StreamVideo client={client}>
                 <StreamTheme>
                     <StreamCall call={call}>
+                        <CallParticipantsList onClose={() => {}} />
                         <SpeakerLayout />
-                        <CallControls />
+                        <CallControls onLeave={() => router.replace('/')} />
                     </StreamCall>
                 </StreamTheme>
             </StreamVideo>

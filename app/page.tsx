@@ -12,6 +12,7 @@ import { fetchAllRomms } from '@/data-access/rooms';
 import { Room } from '@prisma/client';
 import { GithubIcon } from 'lucide-react';
 import Link from 'next/link';
+import { SearchBar } from './search-bar';
 
 function RoomCard({ room }: { room: Room }) {
     return (
@@ -42,8 +43,8 @@ function RoomCard({ room }: { room: Room }) {
     );
 }
 
-export default async function Home() {
-    const rooms = await fetchAllRomms();
+export default async function Home({ searchParams }: { searchParams: { search: string } }) {
+    const rooms = await fetchAllRomms(searchParams.search);
 
     return (
         <main className='min-h-screen p-8'>
@@ -52,6 +53,9 @@ export default async function Home() {
                 <Link href={'/create-room'} className={buttonVariants({ variant: 'default' })}>
                     Create Room
                 </Link>
+            </div>
+            <div className='mb-12'>
+                <SearchBar />
             </div>
             <div className='grid grid-cols-3 gap-4'>
                 {rooms.map((room) => (
