@@ -4,7 +4,6 @@ import { unstable_noStore } from 'next/cache';
 
 export async function fetchAllRooms(search: string | undefined) {
     unstable_noStore();
-    await new Promise((resolve) => setTimeout(resolve, 3000));
     const rooms = await db.room.findMany({
         where: {
             language: {
@@ -18,7 +17,6 @@ export async function fetchAllRooms(search: string | undefined) {
 
 export async function fetchAllUserRooms() {
     unstable_noStore();
-    await new Promise((resolve) => setTimeout(resolve, 3000));
     const session = await getSession();
     if (!session) {
         throw new Error('User not authenticated');
@@ -40,4 +38,13 @@ export async function fetchRoomById(id: string) {
     });
 
     return room;
+}
+
+export async function deleteRoom(id: string) {
+    console.log('deleteRoom in data-access');
+    await db.room.delete({
+        where: {
+            id,
+        },
+    });
 }

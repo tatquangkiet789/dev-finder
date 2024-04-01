@@ -1,5 +1,6 @@
 import { fetchAllRooms, fetchAllUserRooms } from '@/data-access/rooms';
 import { RoomCard } from './room-card';
+import { getSession } from '@/lib/auth';
 
 const FETCH_TYPE = {
     all: fetchAllRooms,
@@ -14,6 +15,7 @@ async function fetchRooms({ type, slug }: { type: FetchType; slug?: string }) {
 
 export async function RoomList({ type, slug }: { type: FetchType; slug?: string }) {
     const rooms = await fetchRooms({ type, slug });
+    const session = await getSession();
 
     if (!rooms || rooms.length === 0) {
         return <p>No rooms available.</p>;
@@ -22,7 +24,7 @@ export async function RoomList({ type, slug }: { type: FetchType; slug?: string 
     return (
         <div className='grid grid-cols-3 gap-4'>
             {rooms.map((room) => (
-                <RoomCard key={room.id} room={room} />
+                <RoomCard key={room.id} room={room} isDeleted={session?.user.id === room.userId} />
             ))}
         </div>
     );
